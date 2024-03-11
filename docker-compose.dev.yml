@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.8'
 
 services:
   postgres:
@@ -16,7 +16,7 @@ services:
       context: ./front
       dockerfile: Dockerfile.front
     volumes:
-      - static:/starburger_docker/staticfiles
+      - staticfiles:/star_burger_docker/staticfiles
 
   back:
     container_name: back
@@ -24,17 +24,19 @@ services:
       context: ./back
       dockerfile: Dockerfile.back
     depends_on:
+      - front
       - postgres
     env_file:
       - .env
-    command: sh -c "python3 manage.py collectstatic --noinput && python3 manage.py migrate --noinput && python3 manage.py runserver 0.0.0.0:8000"
+    command: sh -c "python3 manage.py migrate --noinput && python3 manage.py runserver 0.0.0.0:8000"
     ports:
       - "8002:8000"
     volumes:
-      - static:/starburger_docker/staticfiles
+      - staticfiles:/star_burger_docker/staticfiles
+      - media:/star_burger_docker/media
   
 
 volumes:
-  static:
+  staticfiles:
   media:
   postgres_data:

@@ -6,3 +6,5 @@ COPY . .
 RUN mkdir -p /star_burger_docker/staticfiles/assets
 RUN mkdir -p /star_burger_docker/staticfiles/bundles
 RUN pip install -r requirements.txt
+RUN python3 manage.py collectstatic --noinput
+

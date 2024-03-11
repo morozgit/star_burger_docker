@@ -89,6 +89,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'star_burger.wsgi.application'
 
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'front/media')
+print(MEDIA_ROOT)
 MEDIA_URL = '/media/'
 
 DATABASES = {'default': dj_database_url.config(default=DB_URL)}
