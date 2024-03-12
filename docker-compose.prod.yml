@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: db
+    volumes:
+      - postgres_data:/var/lib/postgresql/postgres_data
+  front:
+    container_name: front
+    build:
+      context: ./front
+      dockerfile: Dockerfile.front
+    volumes:
+      - staticfiles:/star_burger_docker/staticfiles
+
+  back:
+    container_name: back
+    build: 
+      context: ./back
+      dockerfile: Dockerfile.back
+    depends_on:
+      - front
+      - postgres
+    env_file:
+      - .env
+    command: sh -c "python manage.py migrate --noinput && gunicorn -w 3 star_burger.wsgi --bind 127.0.0.1:8080"
+    ports:
+      - "8002:8000"
+    volumes:
+      - staticfiles:/star_burger_docker/staticfiles
+      - media:/star_burger_docker/media
+  
+
+volumes:
+  staticfiles:
+  media:
+  postgres_data:
