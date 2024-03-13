@@ -9,7 +9,9 @@ env.read_env()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_DIR = os.path.dirname(BASE_DIR)
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'staticfiles')
-
+print('STATIC_ROOT', STATIC_ROOT)
+print('BASE_DIR', BASE_DIR)
+print('PROJECT_DIR',PROJECT_DIR)
 
 SECRET_KEY = env('SECRET_KEY')
 DEBUG = env.bool('DEBUG', True)
